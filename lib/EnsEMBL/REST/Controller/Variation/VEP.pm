@@ -15,6 +15,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+=head1 SYNOPSIS
+
+Sample of a plugable controller
+
+=head1 DESCRIPTION
+
+
+
 =cut
 
 package EnsEMBL::REST::Controller::Variation::VEP;
@@ -24,6 +32,11 @@ use namespace::autoclean;
 require EnsEMBL::REST;
 
 BEGIN { extends 'EnsEMBL::REST::Base::Controller' }
+
+# Use the Catalyst::Controller::REST RFC 7231 compliance
+# mode to correctly handle the response content type.
+# Send JSON by default but allow YAML and 'moo' content
+# types via the Accept header.
 
 __PACKAGE__->config(
   compliance_mode => 1,
@@ -39,7 +52,7 @@ __PACKAGE__->config(
 #
 # Do any initialization here, such as pre-loading caches.
 # As well load any configuration files, any returned value
-# will be placed in (EnsEMBL::REST->config()->{"Controller::Lookup"}
+# will be placed in (EnsEMBL::REST->config()->{"Controller::Variation::VEP"}
 #
 sub initialize_controller {
   my ($self) = @_;
@@ -79,6 +92,8 @@ sub endpoints {
   
   return $endpoints;
 }
+
+# Silly little endpoint to demonstrate plugable controllers
 
 sub foo : Path('/vepy') {
   my ($self, $c, $id) = @_;
